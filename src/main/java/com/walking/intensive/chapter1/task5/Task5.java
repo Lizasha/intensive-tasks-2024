@@ -12,8 +12,7 @@ import java.util.Arrays;
  */
 public class Task5 {
     public static void main(String[] args) {
-
-        getMedians(3, 4, 5);
+        getInscribedCircleRadius(13, 12, 5);
     }
 
     /**
@@ -80,9 +79,9 @@ public class Task5 {
             return new double[0];
         }
 
-        triangleMedians[0] = Math.sqrt((2 * b * b + 2 * c * c - a * a)/4);
-        triangleMedians[1] = Math.sqrt((2 * a * a + 2 * c * c - b * b)/4);
-        triangleMedians[2] = Math.sqrt((2 * a * a + 2 * b * b - c * c)/4);
+        triangleMedians[0] = Math.sqrt((2 * b * b + 2 * c * c - a * a) / 4);
+        triangleMedians[1] = Math.sqrt((2 * a * a + 2 * c * c - b * b) / 4);
+        triangleMedians[2] = Math.sqrt((2 * a * a + 2 * b * b - c * c) / 4);
 
         Arrays.sort(triangleMedians);
 
@@ -103,7 +102,13 @@ public class Task5 {
             return new double[0];
         }
 
-        return null; // Заглушка. При реализации - удалить
+        triangleBisectors[0] = Math.sqrt(b * c * (1 - Math.pow(a, 2) / Math.pow(b + c, 2)));
+        triangleBisectors[1] = Math.sqrt(a * c * (1 - Math.pow(b, 2) / Math.pow(a + c, 2)));
+        triangleBisectors[2] = Math.sqrt(a * b * (1 - Math.pow(c, 2) / Math.pow(a + b, 2)));
+
+        Arrays.sort(triangleBisectors);
+
+        return triangleBisectors;
     }
 
     /**
@@ -114,9 +119,27 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать пустой массив нулевой длины.
      */
     static double[] getAngles(double a, double b, double c) {
-        //        Место для вашего кода
+        double[] triangleAngles = {0, 0, 0};
 
-        return null; // Заглушка. При реализации - удалить
+        if (a + b <= c || a + c <= b || c + b <= a) {
+            return new double[0];
+        }
+
+        double cosA = (Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(a, 2)) / (2 * b * c);
+        double cosB = (Math.pow(a, 2) + Math.pow(c, 2) - Math.pow(b, 2)) / (2 * a * c);
+        double cosC = (Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)) / (2 * a * b);
+
+        if (cosA < -1 || cosA > 1 || cosB < -1 || cosB > 1 || cosC < -1 || cosC > 1) {
+            return new double[0];
+        }
+
+        triangleAngles[0] = Math.acos(cosA) * 180 / Math.PI;
+        triangleAngles[1] = Math.acos(cosB) * 180 / Math.PI;
+        triangleAngles[2] = Math.acos(cosC) * 180 / Math.PI;
+
+        Arrays.sort(triangleAngles);
+
+        return triangleAngles;
     }
 
     /**
@@ -127,9 +150,14 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать -1.
      */
     static double getInscribedCircleRadius(double a, double b, double c) {
-        //        Место для вашего кода
+        if (a + b <= c || a + c <= b || c + b <= a) {
+            return -1;
+        }
 
-        return 0; // Заглушка. При реализации - удалить
+        double halfPerimeter = (a + b + c) / 2;
+        double area = Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b) * (halfPerimeter - c));
+
+        return area / halfPerimeter;
     }
 
     /**
@@ -140,9 +168,12 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать -1.
      */
     static double getCircumradius(double a, double b, double c) {
-        //        Место для вашего кода
+        if (a + b <= c || a + c <= b || c + b <= a) {
+            return -1;
+        }
 
-        return 0; // Заглушка. При реализации - удалить
+        double halfPerimeter = (a + b + c) / 2;
+        return (a * b * c) / (4 * Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b) * (halfPerimeter - c)));
     }
 
     /**
