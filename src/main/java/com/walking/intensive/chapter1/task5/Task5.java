@@ -12,7 +12,8 @@ import java.util.Arrays;
  */
 public class Task5 {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(getHeights(3, 4, 5)));
+
+        getMedians(3, 4, 5);
     }
 
     /**
@@ -73,9 +74,19 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать пустой массив нулевой длины.
      */
     static double[] getMedians(double a, double b, double c) {
-        //        Место для вашего кода
+        double[] triangleMedians = {0, 0, 0};
 
-        return null; // Заглушка. При реализации - удалить
+        if (a + b <= c || a + c <= b || c + b <= a) {
+            return new double[0];
+        }
+
+        triangleMedians[0] = Math.sqrt((2 * b * b + 2 * c * c - a * a)/4);
+        triangleMedians[1] = Math.sqrt((2 * a * a + 2 * c * c - b * b)/4);
+        triangleMedians[2] = Math.sqrt((2 * a * a + 2 * b * b - c * c)/4);
+
+        Arrays.sort(triangleMedians);
+
+        return triangleMedians;
     }
 
     /**
@@ -86,7 +97,11 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать пустой массив нулевой длины.
      */
     static double[] getBisectors(double a, double b, double c) {
-        //        Место для вашего кода
+        double[] triangleBisectors = {0, 0, 0};
+
+        if (a + b <= c || a + c <= b || c + b <= a) {
+            return new double[0];
+        }
 
         return null; // Заглушка. При реализации - удалить
     }
