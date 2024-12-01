@@ -1,5 +1,7 @@
 package com.walking.intensive.chapter1.task5;
 
+import java.util.Arrays;
+
 /**
  * Задача поиска площади, величин углов, длин высот, биссектрис, медиан, радиусов вписанной и описанной вокруг
  * треугольника окружностей является центральной в Геометрии.
@@ -10,7 +12,7 @@ package com.walking.intensive.chapter1.task5;
  */
 public class Task5 {
     public static void main(String[] args) {
-//        Для собственных проверок можете делать любые изменения в этом методе
+        System.out.println(Arrays.toString(getHeights(3, 4, 5)));
     }
 
     /**
@@ -23,9 +25,20 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать -1.
      */
     static double getAreaByHeron(double a, double b, double c) {
-        //        Место для вашего кода
+        if (a + b < c || b + c < a || c + a < b) {
+            return -1;
+        }
 
-        return 0; // Заглушка. При реализации - удалить
+        if (a < 0 || b < 0 || c < 0) {
+            return -1;
+        }
+
+        double halfPerimeter;
+        double area;
+
+        halfPerimeter = (a + b + c) / 2;
+        area = Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b) * (halfPerimeter - c));
+        return area;
     }
 
     /**
@@ -36,9 +49,20 @@ public class Task5 {
      * <p>Если входные данные некорректны - метод должен возвращать пустой массив нулевой длины.
      */
     static double[] getHeights(double a, double b, double c) {
-        //        Место для вашего кода
+        double[] triangleHeights = {0, 0, 0};
 
-        return null; // Заглушка. При реализации - удалить
+        if (a + b <= c || a + c <= b || c + b <= a) {
+            return new double[0];
+        }
+
+        double halfPerimeter = (a + b + c) / 2;
+        double area = Math.sqrt(halfPerimeter * (halfPerimeter - a) * (halfPerimeter - b) * (halfPerimeter - c));
+        triangleHeights[0] = 2 * area / a;
+        triangleHeights[1] = 2 * area / b;
+        triangleHeights[2] = 2 * area / c;
+        Arrays.sort(triangleHeights);
+
+        return triangleHeights;
     }
 
     /**
